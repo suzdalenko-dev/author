@@ -1491,7 +1491,7 @@ textarea.form-control {
     padding: 3rem !important; } }
 
 body {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: Consolas, monospace, sans-serif;
   background: #FFFFFF;
   font-size: 16px;
   line-height: 1.8;
@@ -2487,7 +2487,7 @@ textarea.form-control {
       .comment-list li .comment-body h3, .comment-list li .comment-body .h3 {
         font-size: 18px;
         font-weight: 600;
-        font-family: "Poppins", Arial, sans-serif; }
+        font-family: Consolas, monospace, sans-serif; }
       .comment-list li .comment-body .meta {
         text-transform: uppercase;
         font-size: 13px;
@@ -2538,7 +2538,7 @@ textarea.form-control {
     font-size: 20px;
     margin-bottom: 30px;
     font-weight: 700;
-    font-family: "Poppins", Arial, sans-serif; }
+    font-family: Consolas, monospace, sans-serif; }
 
 .categories {
   padding: 0; }
