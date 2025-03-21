@@ -8,14 +8,14 @@ import BlogItem from "./pages/BlogItem";
 function App() {
   return (
     <div className="App">
-     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:itemId" element={<BlogItem />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:itemId" element={<BlogItem />} />
+        </Routes>
+      </Router>
 
     </div>
   );
