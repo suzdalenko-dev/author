@@ -88,7 +88,7 @@ const Blog = () => {
             <div className="col-md-12">
               <h4>Etiquetas</h4>
               <div className="tagcloud">
-              <Link to="/Blog" className="tag-cloud-link">Todos</Link>
+              <Link to="/Blog" className="tag-cloud-link">Todo</Link>
                 {tags && tags.map((item, index) => (
                   <Link to={`/Blog?Tag=${item}`} className="tag-cloud-link" key={index}>{item}</Link>
                 ))}
