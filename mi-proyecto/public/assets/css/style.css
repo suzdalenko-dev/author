@@ -1203,17 +1203,6 @@ textarea.form-control {
   -ms-transform: translateX(-100%);
   transform: translateX(-100%); }
 
-/* rtl:end:ignore */
-
-/* rtl:options: {
-  "autoRename": true,
-  "stringMap":[ {
-    "name"    : "prev-next",
-    "search"  : "prev",
-    "replace" : "next"
-  } ]
-} */
-
 .carousel-indicators {
   position: absolute;
   right: 0;
@@ -1520,7 +1509,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5,
     background: white;
     color: rgba(0, 0, 0, 0.7);
     border-radius: 2px;
-    width: 400px;
+    width: 92%;
+    margin-left: 7%;
     font-weight: 500;
     border: 1px solid #395fce;
   }
@@ -1576,6 +1566,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5,
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease; }
 
+.suzdal-wrap{
+  margin-top: 41px;
+  font-weight: 900;
+  font-size: 32px;
+}
+.sbread .me-2 a, .sbread span a{
+  text-transform: uppercase;
+  color: rgb(134, 134, 134)!important;
+  font-weight: 300;
+  font-size: 14px;
+}
 .navbar-brand {
   font-weight: 900;
   font-size: 24px;
@@ -1639,7 +1640,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5,
       @media (max-width: 991.98px) {
         .hero-wrap .slider-text .desc {
           text-align: center; } }
-    .hero-wrap .slider-text .subheading {
+    .hero-wrap .slider-text .subheading,  .suzdal-wrap .slider-text .subheading {
       text-transform: uppercase;
       font-weight: 700;
       color: #395fce;
@@ -2236,9 +2237,9 @@ textarea.form-control {
     z-index: 0;
     padding: 30px; }
     .blog-entry .text .heading {
-      font-size: 22px;
+      font-size: 19px;
       margin-bottom: 0;
-      font-weight: 400; }
+      font-weight: 500; }
       .blog-entry .text .heading a {
         color: #000000; }
         .blog-entry .text .heading a:hover, .blog-entry .text .heading a:focus, .blog-entry .text .heading a:active {
@@ -2368,7 +2369,9 @@ textarea.form-control {
   background: #fff; }
   .tagcloud a:hover {
     color: #222222;
-    background: #395fce; }
+    background: #395fce;
+    color: white; 
+}
 
 .comment-form-wrap {
   clear: both; }
@@ -2521,7 +2524,8 @@ textarea.form-control {
   border-radius: 2px;
   margin-top: 3px;
   display: inline-block;
-  width: 21px;
+  width: 24px;
+  height: 33px;
   margin-left: 7px;
 }
 .titleLink:hover{
@@ -2570,3 +2574,10 @@ p{
 ::-webkit-scrollbar-track {
   background: transparent; /* Track transparente */
 }
+
+.text-content{
+  color: black;
+  font-size: 17px;
+  font-family: Consolas, monospace;
+}
+

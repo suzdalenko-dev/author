@@ -1,284 +1,269 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const BlogItem = () => {
-  const { itemId } = useParams();
+    let { itemId } = useParams();
+    let [post, setPost] = useState(null);
+    let [countPosts, setCountPosts] = useState(0);
+    let [tags, setTags] = useState([]);
 
-  return (
-    <div> {itemId}
-      <section class="hero-wrap hero-wrap-2">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row no-gutters slider-text align-items-end justify-content-center">
-            <div class="col-md-9 pt-5 text-center">
-                <p class="breadcrumbs">
-                    <span class="me-2"><a onclick="route(event)" href="/">Inicio <i class="fa fa-chevron-right"></i></a></span> 
-                    <span class="me-2"><a onclick="route(event)" href="/Blog">Blog <i class="fa fa-chevron-right"></i></a></span>
-                    <span>Entrada <i class="fa fa-chevron-right"></i></span></p>
-                <h1 class="mb-0 bread">Blog Details C</h1>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="ftco-section">
-    <div class="container">
-        <div class="row g-lg-5">
-            <div class="col-lg-8 blog-single">
-                <h2 class="mb-3">#1. Bootstrap 5</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, eius mollitia suscipit,
-                    quisquam doloremque distinctio perferendis et doloribus unde architecto optio laboriosam porro
-                    adipisci sapiente officiis nemo accusamus ad praesentium? Esse minima nisi et. Dolore perferendis,
-                    enim praesentium omnis, iste doloremque quia officia optio deserunt molestiae voluptates soluta
-                    architecto tempora.</p>
-                <p>
-                    <img src="/assets/img/x.jpg" alt class="img-fluid" />
-                </p>
-                <p>Molestiae cupiditate inventore animi, maxime sapiente optio, illo est nemo veritatis repellat sunt
-                    doloribus nesciunt! Minima laborum magni reiciendis qui voluptate quisquam voluptatem soluta illo
-                    eum ullam incidunt rem assumenda eveniet eaque sequi deleniti tenetur dolore amet fugit perspiciatis
-                    ipsa, odit. Nesciunt dolor minima esse vero ut ea, repudiandae suscipit!</p>
-                <h2 class="mb-3 mt-5">#2. Creative WordPress Themes</h2>
-                <p>Temporibus ad error suscipit exercitationem hic molestiae totam obcaecati rerum, eius aut, in.
-                    Exercitationem atque quidem tempora maiores ex architecto voluptatum aut officia doloremque. Error
-                    dolore voluptas, omnis molestias odio dignissimos culpa ex earum nisi consequatur quos odit quasi
-                    repellat qui officiis reiciendis incidunt hic non? Debitis commodi aut, adipisci.</p>
-                <p>
-                    <img src="/assets/img/x.jpg" alt class="img-fluid" />
-                </p>
-                <p>Quisquam esse aliquam fuga distinctio, quidem delectus veritatis reiciendis. Nihil explicabo quod,
-                    est eos ipsum. Unde aut non tenetur tempore, nisi culpa voluptate maiores officiis quis vel ab
-                    consectetur suscipit veritatis nulla quos quia aspernatur perferendis, libero sint. Error, velit,
-                    porro. Deserunt minus, quibusdam iste enim veniam, modi rem maiores.</p>
-                <div class="tag-widget post-tag-container mb-5 mt-5">
-                    <div class="tagcloud">
-                        <a href="#" class="tag-cloud-link">design</a>
-                        <a href="#" class="tag-cloud-link">CSS3</a>
-                        <a href="#" class="tag-cloud-link">HTML5</a>
-                        <a href="#" class="tag-cloud-link">bootstrap5</a>
+    useEffect(() => {
+        if (window.content) {
+            let foundPost = window.content.find((item) => item.id == itemId);
+            setPost(foundPost);
+            let listTags = [];
+            window.content.map((article) => {
+                if(article && article.tags.length > 0) {
+                    article.tags.map((tag) => { if(!listTags.includes(tag)) { listTags.push(tag); };});
+                }
+            });
+            setTags(listTags);
+        }
+        window.scrollTo(0, 0);
+    }, [itemId]);
+
+    useEffect(() => {
+        if (post) {
+            document.title = post.title || "Suzdalenko Alexey - Más que desarrollo";
+            let metaDescription = document.querySelector("meta[name='description']");
+            metaDescription.setAttribute("content", post.description || "Suzdalenko Alexey - Más que desarrollo");
+        }
+    }, [post]);
+
+    useEffect(() => {
+        if (window.content) {
+            setCountPosts(window.content.length - 1);
+        }
+    }, [window.content, itemId]);
+    
+
+    return (
+        <div>
+            <section className="suzdal-wrap">
+                <div className="overlay"></div>
+                <div className="container">
+                    <div className="row no-gutters slider-text align-items-end justify-content-center">
+                        <div className="col-md-9 pt-5 text-center">
+                            <p className="breadcrumbs sbread">
+                                <span className="me-2"><Link to="/">Inicio <i className="fa fa-chevron-right"></i></Link></span>
+                                <span className="me-2"><Link to="/Blog">Blog <i className="fa fa-chevron-right"></i></Link></span>
+                                <span><a href={`/Blog/${post && post.slug}/${post && post.id}`}>Entrada</a></span></p>
+                            <a href={`/Blog/${post && post.slug}/${post && post.id}`}><h1 className="mb-0 bread suzdal-wrap">{post && post.title}</h1></a>
+                        </div>
                     </div>
                 </div>
-                <div class="about-author d-flex p-4 bg-light rounded">
-                    <div class="bio me-md-4 img" style={{ backgroundImage: "url('/assets/img/x.jpg')"}}></div>
-                    <div class="desc">
-                        <h3>George Washington</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem
-                            necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente
-                            consectetur similique, inventore eos fugit cupiditate numquam!</p>
-                    </div>
-                </div>
-                <div class="pt-5 mt-5">
-                    <h3 class="mb-5 head-title">6 Comments</h3>
-                    <ul class="comment-list">
-                        <li class="comment">
-                            <div class="vcard bio">
-                                <img src="images/person_1.jpg" alt="Image placeholder" />
+            </section>
+            <section className="ftco-section">
+                <div className="container">
+                    <div className="row g-lg-5">
+                        <div className="col-lg-8 blog-single">
+                            {post && <div className="text-content" dangerouslySetInnerHTML={{ __html: post.content }}></div>}
+                            <div className="tag-widget post-tag-container mb-5 mt-5">
+                                <div className="tagcloud">
+                                    {post && post.tags && post.tags.map((item, index) => (
+                                        <a href="#" className="tag-cloud-link" key={index}>{item}</a>
+                                    ))}
+                                </div>
                             </div>
-                            <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">January 07, 2021 at 10:10am</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                    necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                    iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                <p><a href="#" class="reply">Reply</a></p>
+                            <div className="about-author d-flex p-4 bg-light rounded">
+                                {/* <div className="bio me-md-4 img" style={{ backgroundImage: "url('/assets/img/x.jpg')" }}></div> */}
+                                <div className="desc">
+                                    <h3>Resumen</h3>
+                                    <p className="text-content">{post && post.description}</p>
+                                    <p className="text-content">Fecha: {post && post.date}</p>
+                                </div>
                             </div>
-                        </li>
-                        <li class="comment">
-                            <div class="vcard bio">
-                                <img src="images/person_1.jpg" alt="Image placeholder" />
-                            </div>
-                            <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">January 07, 2021 at 10:10am</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                    necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                    iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                <p><a href="#" class="reply">Reply</a></p>
-                            </div>
-                            <ul class="children">
-                                <li class="comment">
-                                    <div class="vcard bio">
-                                        <img src="images/person_1.jpg" alt="Image placeholder" />
-                                    </div>
-                                    <div class="comment-body">
-                                        <h3>John Doe</h3>
-                                        <div class="meta">January 07, 2021 at 10:10am</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
-                                            laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe
-                                            enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?
-                                        </p>
-                                        <p><a href="#" class="reply">Reply</a></p>
-                                    </div>
-                                    <ul class="children">
-                                        <li class="comment">
-                                            <div class="vcard bio">
-                                                <img src="images/person_1.jpg" alt="Image placeholder" />
+                            {/* 
+                            <div className="pt-5 mt-5">
+                                <h3 className="mb-5 head-title">6 Comments</h3>
+                                <ul className="comment-list">
+                                    <li className="comment">
+                                        <div className="vcard bio">
+                                            <img src="images/person_1.jpg" alt="Image placeholder" />
+                                        </div>
+                                        <div className="comment-body">
+                                            <h3>John Doe</h3>
+                                            <div className="meta">January 07, 2021 at 10:10am</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
+                                                necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
+                                                iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                            <p><a href="#" className="reply">Reply</a></p>
+                                        </div>
+                                    </li>
+                                    <li className="comment">
+                                        <div className="vcard bio">
+                                            <img src="images/person_1.jpg" alt="Image placeholder" />
+                                        </div>
+                                        <div className="comment-body">
+                                            <h3>John Doe</h3>
+                                            <div className="meta">January 07, 2021 at 10:10am</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
+                                                necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
+                                                iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                            <p><a href="#" className="reply">Reply</a></p>
+                                        </div>
+                                        <ul className="children">
+                                            <li className="comment">
+                                                <div className="vcard bio">
+                                                    <img src="images/person_1.jpg" alt="Image placeholder" />
+                                                </div>
+                                                <div className="comment-body">
+                                                    <h3>John Doe</h3>
+                                                    <div className="meta">January 07, 2021 at 10:10am</div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
+                                                        laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe
+                                                        enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?
+                                                    </p>
+                                                    <p><a href="#" className="reply">Reply</a></p>
+                                                </div>
+                                                <ul className="children">
+                                                    <li className="comment">
+                                                        <div className="vcard bio">
+                                                            <img src="images/person_1.jpg" alt="Image placeholder" />
+                                                        </div>
+                                                        <div className="comment-body">
+                                                            <h3>John Doe</h3>
+                                                            <div className="meta">January 07, 2021 at 10:10am</div>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur
+                                                                quidem laborum necessitatibus, ipsam impedit vitae autem, eum
+                                                                officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
+                                                                impedit necessitatibus, nihil?</p>
+                                                            <p><a href="#" className="reply">Reply</a></p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li className="comment">
+                                        <div className="vcard bio">
+                                            <img src="images/person_1.jpg" alt="Image placeholder" />
+                                        </div>
+                                        <div className="comment-body">
+                                            <h3>John Doe</h3>
+                                            <div className="meta">January 07, 2021 at 10:10am</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
+                                                necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
+                                                iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                            <p><a href="#" className="reply">Reply</a></p>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div className="comment-form-wrap pt-5">
+                                    <h3 className="mb-5 head-title">Leave a comment</h3>
+                                    <form action="#" className="p-4 p-lg-5 comment-form">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label for="name">Name *</label>
+                                                    <input type="text" className="form-control" id="name" />
+                                                </div>
                                             </div>
-                                            <div class="comment-body">
-                                                <h3>John Doe</h3>
-                                                <div class="meta">January 07, 2021 at 10:10am</div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur
-                                                    quidem laborum necessitatibus, ipsam impedit vitae autem, eum
-                                                    officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
-                                                    impedit necessitatibus, nihil?</p>
-                                                <p><a href="#" class="reply">Reply</a></p>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <label for="email">Email *</label>
+                                                    <input type="email" className="form-control" id="email" />
+                                                </div>
                                             </div>
-                                        </li>
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label for="website">Website</label>
+                                                    <input type="url" className="form-control" id="website" />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label for="message">Message</label>
+                                                    <textarea name id="message" cols="30" rows="10" className="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <input type="submit" value="Post Comment" className="btn py-3 px-4 btn-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> */}
+                        </div>
+                        <div className="col-lg-4 sidebar pl-md-4">
+                            <div className="sidebar-box bg-light rounded">
+                                <form action="#" className="search-form">
+                                    <div className="form-group">
+                                        <span className="icon fa fa-search"></span>
+                                        <input type="text" className="form-control" placeholder="Buscar..." />
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="sidebar-box">
+                                <h3>¿A qué me dedico?</h3>
+                                <div className="d-md-flex">
+                                    <ul className="categories me-md-4">
+                                        <li><a href="#">UI/UX y experiencia del usuario en aplicaciones</a></li>
+                                        <li><a href="#">Desarrollo de software</a></li>
+                                        <li><a href="#">Desarrollo de APIs REST</a></li>
+                                        <li><a href="#">Laravel, Symfony, Django, Vue, React, etc.</a></li>
+                                        <li><a href="#">Automatización y DevOps</a></li>
+                                        <li><a href="#">Business Intelligence con Power BI</a></li>
+                                        <li><a href="#">Modelado de datos con Python, DAX</a></li>
                                     </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="comment">
-                            <div class="vcard bio">
-                                <img src="images/person_1.jpg" alt="Image placeholder" />
-                            </div>
-                            <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">January 07, 2021 at 10:10am</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                    necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                    iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                <p><a href="#" class="reply">Reply</a></p>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="comment-form-wrap pt-5">
-                        <h3 class="mb-5 head-title">Leave a comment</h3>
-                        <form action="#" class="p-4 p-lg-5 comment-form">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name">Name *</label>
-                                        <input type="text" class="form-control" id="name" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email *</label>
-                                        <input type="email" class="form-control" id="email" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="website">Website</label>
-                                        <input type="url" class="form-control" id="website" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="message">Message</label>
-                                        <textarea name id="message" cols="30" rows="10" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary" />
-                                    </div>
+                                    <ul className="categories ms-md-4">
+                                        <li><a href="#">Integraciones con bases de datos SQL y NoSQL</a></li>
+                                        <li><a href="#">Desarrollo de aplicaciones Android con Kotlin y Flutter</a></li>
+                                        <li><a href="#">Seguridad en aplicaciones web y móviles</a></li>
+                                        <li><a href="#">Diseño y desarrollo de productos digitales</a></li>
+                                        <li><a href="#">Consultoría y asesoría tecnológica</a></li>
+                                        <li><a href="#"></a>Análisis y transformación de datos</li>
+                                    </ul>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 sidebar pl-md-4">
-                <div class="sidebar-box bg-light rounded">
-                    <form action="#" class="search-form">
-                        <div class="form-group">
-                            <span class="icon fa fa-search"></span>
-                            <input type="text" class="form-control" placeholder="Search..." />
-                        </div>
-                    </form>
-                </div>
-                <div class="sidebar-box">
-                    <h3>What I Do?</h3>
-                    <div class="d-md-flex">
-                        <ul class="categories me-md-4">
-                            <li><a href="#">UI/UX Design</a></li>
-                            <li><a href="#">Web Development</a></li>
-                            <li><a href="#">Graphic Design</a></li>
-                            <li><a href="#">Branding</a></li>
-                        </ul>
-                        <ul class="categories ms-md-4">
-                            <li><a href="#">Marketing</a></li>
-                            <li><a href="#">Mobile App Design</a></li>
-                            <li><a href="#">Visual Editor</a></li>
-                            <li><a href="#">IT Consultancy</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="sidebar-box">
-                    <h3>Recent Blog</h3>
-                    <div class="block-21 mb-4 d-flex">
-                        <a class="blog-img me-4" style={{ backgroundImage: "url('/assets/img/x.jpg')"}}></a>
-                        <div class="text">
-                            <h3 class="heading"><a href="#">Far far away, behind the word mountains</a></h3>
-                            <div class="meta">
-                                <div><a href="#"><span class="fa fa-calendar"></span> December 24, 2020</a></div>
-                                <div><a href="#"><span class="fa fa-user"></span> Admin</a></div>
-                                <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+                            <div className="sidebar-box">
+                                <h3>Últimas entradas {countPosts}</h3>
+                                {window.content.map((item, index) =>  {
+                                    if (item.id == itemId) {return; }
+                                    return (
+                                        <div className="block-21 mb-4 d-flex" key={index}>
+                                            <Link to={`/Blog/${item.slug}/${item.id}`} className="blog-img me-4" style={{ backgroundImage: `url(${item.preview})` }}></Link>
+                                            <div className="text">
+                                                <h3 className="heading"><Link to={`/Blog/${item.slug}/${item.id}`}>{item.title}</Link></h3>
+                                                <div className="meta">
+                                                    <div><a href="#"><span className="fa fa-calendar"></span> {item.date}</a></div>
+                                                    <div><a href="#"><span className="fa fa-comment"></span> 0</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        </div>
-                    </div>
-                    <div class="block-21 mb-4 d-flex">
-                        <a class="blog-img me-4" style={{ backgroundImage: "url('/assets/img/x.jpg')"}}></a>
-                        <div class="text">
-                            <h3 class="heading"><a href="#">Far far away, behind the word mountains</a></h3>
-                            <div class="meta">
-                                <div><a href="#"><span class="fa fa-calendar"></span> December 24, 2020</a></div>
-                                <div><a href="#"><span class="fa fa-user"></span> Admin</a></div>
-                                <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+                            <div className="sidebar-box">
+                                <h3>Etiquetas</h3>
+                                <div className="tagcloud">
+                                    {tags && tags.map((item, index) => (
+                                        <Link to={`/Blog?Tag=${item}`} className="tag-cloud-link" key={index}>{item}</Link>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="block-21 mb-4 d-flex">
-                        <a class="blog-img me-4" style={{ backgroundImage: "url('/assets/img/x.jpg')"}}></a>
-                        <div class="text">
-                            <h3 class="heading"><a href="#">Far far away, behind the word mountains</a></h3>
-                            <div class="meta">
-                                <div><a href="#"><span class="fa fa-calendar"></span> December 24, 2020</a></div>
-                                <div><a href="#"><span class="fa fa-user"></span> Admin</a></div>
-                                <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
+                            <div className="sidebar-box">
+                                <h3>Paragraph</h3>
+                                <p>"La verdadera innovación no solo está en el código que escribimos, sino en las ideas que defendemos: libertad para crear, pensar y expresarse sin imposiciones ni dogmas, porque el progreso real surge del pensamiento crítico, no de la censura disfrazada de justicia."</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="sidebar-box">
-                    <h3>Tag Cloud</h3>
-                    <div class="tagcloud">
-                        <a href="#" class="tag-cloud-link">work</a>
-                        <a href="#" class="tag-cloud-link">graphic</a>
-                        <a href="#" class="tag-cloud-link">design</a>
-                        <a href="#" class="tag-cloud-link">web</a>
-                        <a href="#" class="tag-cloud-link">apps</a>
-                        <a href="#" class="tag-cloud-link">branding</a>
-                        <a href="#" class="tag-cloud-link">tools</a>
-                        <a href="#" class="tag-cloud-link">HTML</a>
-                        <a href="#" class="tag-cloud-link">CSS3</a>
+            </section>
+            <footer className="ftco-footer">
+                <div className="container-xl">
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <p className="mb-0 copyright">Copyright © Todos los derechos publicos <i className="fa fa-heart color-danger" ></i> </p>
+                        </div>
                     </div>
                 </div>
-                <div class="sidebar-box">
-                    <h3>Paragraph</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus
-                        voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur
-                        similique, inventore eos fugit cupiditate numquam!</p>
-                </div>
-            </div>
+            </footer>
         </div>
-    </div>
-</section>
-<footer class="ftco-footer">
-    <div class="container-xl">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p class="mb-0 copyright">Copyright © Todos los derechos publicos <i class="fa fa-heart color-danger" aria-hidden="true"></i> by 
-                    <a href="/" target="_blank">Suzdalenko</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-    </div>
-  );
+    );
 };
 
 export default BlogItem;
