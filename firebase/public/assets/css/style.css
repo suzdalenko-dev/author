@@ -2577,7 +2577,49 @@ p{
 
 .text-content{
   color: black;
-  font-size: 17px;
+  font-size: 15px;
   font-family: Consolas, monospace;
 }
 
+h4{
+  color: black;
+  font-size: 19px;
+  font-family: Consolas, monospace;
+}
+
+
+
+
+
+
+.vscode-editor {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: auto;
+  padding: 12px;
+  color: #000;
+}
+
+.vscode-header {
+  background-color: #f3f3f3;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #444;
+}
+
+/* Estilos para colorear código como en VS Code Light Theme */
+.keyword  { color: #0000ff !important; }     /* azul */
+.number   { color: #098658 !important; }     /* verde */
+.string   { color: #a31515 !important; }     /* rojo */
+.comment  { color: #008000 !important; font-style: italic; } /* verde oscuro */
+.variable { color: #001080 !important; }     /* azul oscuro */
+.method   { color: #795e26 !important; }     /* marrón dorado */
